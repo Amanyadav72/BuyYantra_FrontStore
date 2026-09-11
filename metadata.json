@@ -1,0 +1,6 @@
+{
+  "name": "BuyYantra FrontStore",
+  "description": "Frontend store application for BuyYantra built with React and Vite.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
