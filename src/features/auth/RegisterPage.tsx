@@ -69,18 +69,22 @@ export const RegisterPage: React.FC = () => {
 
   return (
     <div className="min-h-[75vh] flex items-center justify-center px-4 py-12">
-      <Card className="w-full max-w-md shadow-lg border-slate-200">
-        <CardHeader className="text-center space-y-2 pb-6">
-          <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-2xl bg-slate-900 text-amber-400 mb-2">
+      <Card className="w-full max-w-md border-white/[0.08] bg-slate-900/70 backdrop-blur-md glow-hover-cyan shadow-[0_0_30px_-8px_rgba(6,182,212,0.15)]">
+        <CardHeader className="text-center space-y-2 pb-6 border-b border-white/[0.08]">
+          <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-cyan-950/70 border border-cyan-500/40 text-cyan-400 shadow-[0_0_20px_rgba(6,182,212,0.3)] mb-2">
             <UserPlus className="h-6 w-6" />
           </div>
-          <CardTitle className="text-2xl font-bold font-heading">Create an Account</CardTitle>
-          <CardDescription>
-            Join BuyYantra to start ordering industrial supplies & equipment
+          <div className="flex items-center justify-center gap-2">
+            <span className="h-1.5 w-1.5 rounded-full bg-cyan-400 animate-pulse" />
+            <span className="text-[10px] font-mono text-cyan-400 uppercase tracking-widest">INITIALIZE CREDENTIALS</span>
+          </div>
+          <CardTitle className="text-2xl font-bold font-heading text-white">Create Operator ID</CardTitle>
+          <CardDescription className="text-xs font-mono text-slate-400">
+            Register your operator credentials to allocate equipment &amp; enterprise hardware
           </CardDescription>
         </CardHeader>
 
-        <CardContent>
+        <CardContent className="pt-6">
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
             <div className="grid grid-cols-2 gap-3">
               <Input
@@ -98,7 +102,7 @@ export const RegisterPage: React.FC = () => {
             </div>
 
             <Input
-              label="Username"
+              label="Operator Username"
               placeholder="e.g. amanyadav"
               autoComplete="username"
               leftIcon={<User className="w-4 h-4" />}
@@ -108,7 +112,7 @@ export const RegisterPage: React.FC = () => {
             />
 
             <Input
-              label="Email Address"
+              label="Communication Email"
               type="email"
               placeholder="name@example.com"
               autoComplete="email"
@@ -118,7 +122,7 @@ export const RegisterPage: React.FC = () => {
             />
 
             <Input
-              label="Password"
+              label="Security Passphrase"
               type={showPassword ? 'text' : 'password'}
               placeholder="At least 8 characters"
               autoComplete="new-password"
@@ -127,7 +131,7 @@ export const RegisterPage: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="cursor-pointer hover:text-slate-600 focus:outline-none"
+                  className="cursor-pointer text-slate-400 hover:text-cyan-400 focus:outline-none"
                   aria-label={showPassword ? 'Hide password' : 'Show password'}
                 >
                   {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
@@ -140,20 +144,21 @@ export const RegisterPage: React.FC = () => {
 
             <Button
               type="submit"
+              variant="primary"
               fullWidth
               size="lg"
               isLoading={isLoading}
               rightIcon={<ArrowRight className="w-4 h-4" />}
               className="mt-2"
             >
-              Create Account
+              Provision Account
             </Button>
 
-            <div className="pt-4 text-center text-xs text-slate-500 border-t border-slate-100">
-              Already have an account?{' '}
+            <div className="pt-4 text-center text-xs font-mono text-slate-400 border-t border-white/[0.08]">
+              Existing operator?{' '}
               <Link
                 to={redirect ? `/login?redirect=${encodeURIComponent(redirect)}` : '/login'}
-                className="font-semibold text-slate-900 hover:underline"
+                className="font-semibold text-cyan-400 hover:text-cyan-300 hover:underline ml-1"
               >
                 Sign In
               </Link>

@@ -17,7 +17,7 @@ export const MobileNav: React.FC = () => {
   ];
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 z-40 border-t border-slate-200 bg-white/95 backdrop-blur-md md:hidden pb-[env(safe-area-inset-bottom)]">
+    <div className="fixed bottom-0 left-0 right-0 z-40 border-t border-white/10 bg-[#080b11]/90 backdrop-blur-xl md:hidden pb-[env(safe-area-inset-bottom)]">
       <div className="flex items-center justify-around py-2">
         {navItems.map((item) => {
           const Icon = item.icon;
@@ -26,15 +26,17 @@ export const MobileNav: React.FC = () => {
               key={item.label}
               to={item.to}
               className={({ isActive }) =>
-                `flex flex-col items-center justify-center min-w-14 py-1 text-[11px] font-medium transition-colors ${
-                  isActive ? 'text-slate-900 font-semibold' : 'text-slate-500 hover:text-slate-700'
+                `flex flex-col items-center justify-center min-w-14 py-1 text-[11px] font-medium transition-all ${
+                  isActive
+                    ? 'text-cyan-400 font-semibold drop-shadow-[0_0_8px_rgba(6,182,212,0.5)]'
+                    : 'text-slate-400 hover:text-slate-200'
                 }`
               }
             >
               <div className="relative">
                 <Icon className="h-5 w-5" />
                 {item.badge !== undefined && item.badge > 0 && (
-                  <span className="absolute -top-1.5 -right-2.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-slate-900 px-1 text-[9px] font-bold text-amber-400">
+                  <span className="absolute -top-1.5 -right-2.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-cyan-500 px-1 text-[9px] font-bold text-slate-950 shadow-[0_0_8px_rgba(6,182,212,0.6)]">
                     {item.badge}
                   </span>
                 )}

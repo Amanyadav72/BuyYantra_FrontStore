@@ -1,6 +1,6 @@
 {
   "name": "BuyYantra FrontStore",
-  "description": "Frontend store application for BuyYantra built with React and Vite.",
+  "description": "Premier consumer electronics e-commerce store for phones, laptops, accessories, smart appliances, and computer parts with live inventory and fast shipping.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }

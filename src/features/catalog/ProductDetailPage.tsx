@@ -115,31 +115,32 @@ export const ProductDetailPage: React.FC = () => {
       <nav>
         <Link
           to="/products"
-          className="inline-flex items-center gap-2 text-xs font-semibold text-slate-600 hover:text-slate-900 transition-colors"
+          className="inline-flex items-center gap-2 text-xs font-mono font-semibold text-slate-500 dark:text-slate-400 hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors"
         >
           <ArrowLeft className="w-4 h-4" />
-          Back to Equipment Catalog
+          BACK TO ELECTRONICS CATALOG
         </Link>
       </nav>
 
       {/* Main PDP Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
         {/* Left: Product Image */}
         <div className="lg:col-span-6">
-          <div className="sticky top-24 aspect-square rounded-2xl border border-slate-200 bg-white overflow-hidden shadow-xs flex items-center justify-center">
+          <div className="sticky top-24 aspect-square rounded-2xl border border-slate-200 dark:border-white/[0.08] bg-white dark:bg-[#0c121c] overflow-hidden shadow-sm dark:shadow-2xl flex items-center justify-center relative group">
+            <div className="absolute inset-0 tech-grid-cyan opacity-10 pointer-events-none" />
             {product.image && !imageError ? (
               <img
                 src={product.image}
                 alt={product.name}
                 onError={() => setImageError(true)}
-                className="w-full h-full object-contain p-4"
+                className="w-full h-full object-contain p-6 relative z-10 transition-transform duration-500 group-hover:scale-105"
                 referrerPolicy="no-referrer"
               />
             ) : (
-              <div className="flex flex-col items-center justify-center text-slate-400 p-8 text-center">
-                <Cpu className="w-16 h-16 mb-2 opacity-40 text-slate-600" />
-                <span className="text-sm font-semibold text-slate-700">{product.name}</span>
-                <span className="text-xs text-slate-400 mt-1">ShopHub Verified Apparatus</span>
+              <div className="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 p-8 text-center relative z-10">
+                <Cpu className="w-16 h-16 mb-2 text-cyan-500/50" />
+                <span className="text-sm font-semibold text-slate-800 dark:text-slate-200">{product.name}</span>
+                <span className="text-xs font-mono text-cyan-600 dark:text-cyan-400/70 mt-1">BuyYantra Verified Electronics</span>
               </div>
             )}
           </div>
@@ -152,7 +153,7 @@ export const ProductDetailPage: React.FC = () => {
             <div className="flex flex-wrap gap-2">
               {product.categories.map((cat) => (
                 <Link key={cat.id} to={`/products?categories=${cat.id}`}>
-                  <Badge variant="accent" size="sm">
+                  <Badge variant="primary" size="sm">
                     {cat.name}
                   </Badge>
                 </Link>
@@ -161,19 +162,19 @@ export const ProductDetailPage: React.FC = () => {
           )}
 
           {/* Title */}
-          <h1 className="text-2xl sm:text-3xl font-bold font-heading tracking-tight text-slate-900 leading-tight">
+          <h1 className="text-2xl sm:text-3xl font-bold font-heading tracking-tight text-slate-900 dark:text-white leading-tight">
             {product.name}
           </h1>
 
           {/* Price & Stock */}
-          <div className="flex items-center gap-4 py-3 border-y border-slate-100">
-            <span className="text-3xl font-extrabold text-slate-900">
+          <div className="flex items-center gap-4 py-4 border-y border-slate-200 dark:border-white/[0.08]">
+            <span className="text-3xl font-extrabold text-slate-900 dark:text-white font-mono tracking-tight">
               {formatCurrency(product.price)}
             </span>
 
             <div>
               {isOutOfStock ? (
-                <Badge variant="danger">Out of Stock</Badge>
+                <Badge variant="danger">Sold Out</Badge>
               ) : isLowStock ? (
                 <Badge variant="warning">Only {product.stock} units remaining</Badge>
               ) : (
@@ -187,37 +188,37 @@ export const ProductDetailPage: React.FC = () => {
 
           {/* Description */}
           <div className="space-y-2">
-            <h3 className="text-xs font-bold uppercase tracking-wider text-slate-500">
-              Description & Specifications
+            <h3 className="text-xs font-mono font-bold uppercase tracking-wider text-cyan-600 dark:text-cyan-400">
+              Technical Specifications &amp; Overview
             </h3>
-            <div className="prose prose-sm text-slate-700 max-w-none whitespace-pre-line leading-relaxed text-sm">
-              {product.description || 'No detailed description provided by the distributor.'}
+            <div className="prose prose-sm text-slate-700 dark:text-slate-300 max-w-none whitespace-pre-line leading-relaxed text-sm">
+              {product.description || 'No detailed specifications filed in the system registry.'}
             </div>
           </div>
 
           {/* Quantity and Add to Cart Form */}
-          <div className="pt-4 border-t border-slate-100 space-y-4">
+          <div className="pt-4 border-t border-slate-200 dark:border-white/[0.08] space-y-4">
             <div className="flex items-center gap-4">
               <div className="space-y-1">
-                <span className="text-xs font-semibold text-slate-700 block">Quantity</span>
-                <div className="flex items-center border border-slate-300 rounded-lg bg-slate-50">
+                <span className="text-xs font-mono font-semibold text-slate-500 dark:text-slate-400 block">QUANTITY</span>
+                <div className="flex items-center border border-slate-200 dark:border-white/10 rounded-xl bg-white dark:bg-slate-900/80 shadow-xs">
                   <button
                     type="button"
                     onClick={() => setQuantity((q) => Math.max(1, q - 1))}
                     disabled={quantity <= 1 || isOutOfStock}
-                    className="p-2 text-slate-600 hover:text-slate-900 disabled:opacity-40"
+                    className="p-2 text-slate-500 hover:text-cyan-600 dark:text-slate-400 dark:hover:text-cyan-400 disabled:opacity-30 cursor-pointer"
                     aria-label="Decrease quantity"
                   >
                     <Minus className="w-4 h-4" />
                   </button>
-                  <span className="px-3 py-1 text-sm font-bold text-slate-900 min-w-8 text-center">
+                  <span className="px-3 py-1 text-sm font-bold font-mono text-slate-900 dark:text-white min-w-8 text-center">
                     {quantity}
                   </span>
                   <button
                     type="button"
                     onClick={() => setQuantity((q) => Math.min(product.stock, q + 1))}
                     disabled={quantity >= product.stock || isOutOfStock}
-                    className="p-2 text-slate-600 hover:text-slate-900 disabled:opacity-40"
+                    className="p-2 text-slate-500 hover:text-cyan-600 dark:text-slate-400 dark:hover:text-cyan-400 disabled:opacity-30 cursor-pointer"
                     aria-label="Increase quantity"
                   >
                     <Plus className="w-4 h-4" />
@@ -231,34 +232,35 @@ export const ProductDetailPage: React.FC = () => {
                   disabled={isOutOfStock}
                   isLoading={isAdding}
                   size="lg"
+                  variant="primary"
                   fullWidth
                   leftIcon={<ShoppingBag className="w-5 h-5" />}
                   className="h-11"
                 >
-                  {isOutOfStock ? 'Currently Unavailable' : 'Add to Cart'}
+                  {isOutOfStock ? 'Sold Out' : 'Add to Cart'}
                 </Button>
               </div>
             </div>
           </div>
 
           {/* Meta Details Card */}
-          <div className="rounded-xl border border-slate-200 bg-slate-50/70 p-4 space-y-2 text-xs text-slate-600">
-            <div className="flex items-center justify-between py-1 border-b border-slate-200/60">
-              <span className="flex items-center gap-1.5 text-slate-500">
-                <Layers className="w-3.5 h-3.5" />
-                Product Reference ID:
+          <div className="rounded-2xl border border-slate-200 dark:border-white/[0.08] bg-white dark:bg-slate-900/60 p-4 space-y-2.5 text-xs text-slate-600 dark:text-slate-400 shadow-sm dark:shadow-none backdrop-blur-sm">
+            <div className="flex items-center justify-between py-1 border-b border-slate-100 dark:border-white/[0.06]">
+              <span className="flex items-center gap-1.5 text-slate-500 dark:text-slate-400">
+                <Layers className="w-3.5 h-3.5 text-cyan-600 dark:text-cyan-400" />
+                SKU / Item ID:
               </span>
-              <span className="font-mono font-medium text-slate-800">#{product.id}</span>
+              <span className="font-mono font-medium text-cyan-700 dark:text-cyan-300">YNT-#{product.id}</span>
             </div>
 
             {product.created_at && (
               <div className="flex items-center justify-between py-1">
-                <span className="flex items-center gap-1.5 text-slate-500">
-                  <Calendar className="w-3.5 h-3.5" />
-                  Cataloged On:
+                <span className="flex items-center gap-1.5 text-slate-500 dark:text-slate-400">
+                  <Calendar className="w-3.5 h-3.5 text-cyan-600 dark:text-cyan-400" />
+                  Catalog Entry:
                 </span>
-                <span className="text-slate-700">
-                  {format(new Date(product.created_at), 'MMMM dd, yyyy')}
+                <span className="text-slate-700 dark:text-slate-300 font-mono">
+                  {format(new Date(product.created_at), 'yyyy-MM-dd HH:mm')}
                 </span>
               </div>
             )}

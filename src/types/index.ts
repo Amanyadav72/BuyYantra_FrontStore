@@ -6,6 +6,7 @@ export interface User {
   email?: string;
   first_name?: string;
   last_name?: string;
+  avatar?: string | null;
 }
 
 export interface RegisterPayload {
@@ -64,6 +65,8 @@ export interface ProfileUpdatePayload {
   first_name?: string;
   last_name?: string;
   email?: string;
+  phone?: string;
+  avatar?: string | null;
 }
 
 export type ChangePasswordPayload = PasswordChangePayload;

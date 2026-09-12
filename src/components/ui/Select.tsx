@@ -18,10 +18,10 @@ export const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
         {label && (
           <label
             htmlFor={selectId}
-            className="block text-xs font-semibold uppercase tracking-wider text-slate-700"
+            className="block text-xs font-semibold uppercase tracking-wider text-slate-300"
           >
             {label}
-            {props.required && <span className="text-rose-500 ml-0.5">*</span>}
+            {props.required && <span className="text-cyan-400 ml-0.5">*</span>}
           </label>
         )}
 
@@ -30,19 +30,19 @@ export const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
             id={selectId}
             ref={ref}
             className={cn(
-              'w-full appearance-none rounded-lg border bg-white px-3.5 py-2 pr-10 text-sm text-slate-900 transition-colors',
-              'focus:outline-none focus:ring-2 focus:ring-slate-900 focus:border-transparent',
-              'disabled:bg-slate-50 disabled:text-slate-400 disabled:cursor-not-allowed',
+              'w-full appearance-none rounded-lg border bg-white dark:bg-slate-900/80 px-3.5 py-2 pr-10 text-sm text-slate-900 dark:text-slate-100 transition-all shadow-xs',
+              'focus:outline-none focus:ring-1 focus:ring-cyan-500 focus:border-cyan-500 focus:shadow-[0_0_15px_rgba(6,182,212,0.15)]',
+              'disabled:bg-slate-100 dark:disabled:bg-slate-950/50 disabled:text-slate-400 dark:disabled:text-slate-500 disabled:cursor-not-allowed',
               error
-                ? 'border-rose-300 focus:ring-rose-500 focus:border-rose-500'
-                : 'border-slate-300 hover:border-slate-400',
+                ? 'border-rose-500/80 focus:ring-rose-500 focus:border-rose-500'
+                : 'border-slate-200 dark:border-white/10 hover:border-cyan-500/40',
               className
             )}
             {...props}
           >
             {options
               ? options.map((opt) => (
-                  <option key={opt.value} value={opt.value}>
+                  <option key={opt.value} value={opt.value} className="bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100">
                     {opt.label}
                   </option>
                 ))
@@ -55,9 +55,9 @@ export const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
         </div>
 
         {error ? (
-          <p className="text-xs font-medium text-rose-600">{error}</p>
+          <p className="text-xs font-medium text-rose-400">{error}</p>
         ) : helperText ? (
-          <p className="text-xs text-slate-500">{helperText}</p>
+          <p className="text-xs text-slate-400">{helperText}</p>
         ) : null}
       </div>
     );

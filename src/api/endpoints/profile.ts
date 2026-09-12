@@ -8,20 +8,51 @@ import type {
 
 export const profileApi = {
   getProfile: async (): Promise<CustomerProfile> => {
-    const response = await axiosClient.get<CustomerProfile>('/profile/');
-    return response.data;
+    try {
+      const response = await axiosClient.get<CustomerProfile>('/profile/');
+      return response.data;
+    } catch {
+      try {
+        const fallback = await axiosClient.get<CustomerProfile>('/auth/profile/');
+        return fallback.data;
+      } catch {
+        const me = await axiosClient.get<CustomerProfile>('/auth/me/');
+        return me.data;
+      }
+    }
   },
 
   updateProfile: async (payload: ProfileUpdatePayload): Promise<CustomerProfile> => {
-    const response = await axiosClient.patch<CustomerProfile>('/profile/', payload);
-    return response.data;
+    try {
+      const response = await axiosClient.patch<CustomerProfile>('/profile/', payload);
+      return response.data;
+    } catch (err) {
+      try {
+        const fallback = await axiosClient.patch<CustomerProfile>('/auth/profile/', payload);
+        return fallback.data;
+      } catch {
+        throw err;
+      }
+    }
   },
 
   changePassword: async (payload: ChangePasswordPayload): Promise<ChangePasswordResponse> => {
-    const response = await axiosClient.post<ChangePasswordResponse>(
-      '/profile/change-password/',
-      payload
-    );
-    return response.data;
+    try {
+      const response = await axiosClient.post<ChangePasswordResponse>(
+        '/profile/change-password/',
+        payload
+      );
+      return response.data;
+    } catch (err) {
+      try {
+        const fallback = await axiosClient.post<ChangePasswordResponse>(
+          '/auth/password/change/',
+          payload
+        );
+        return fallback.data || { detail: 'Password updated successfully' };
+      } catch {
+        throw err;
+      }
+    }
   },
 };

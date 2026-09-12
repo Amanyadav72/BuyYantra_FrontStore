@@ -47,25 +47,25 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   };
 
   return (
-    <Card hoverEffect className="group flex flex-col h-full overflow-hidden border-slate-200">
-      <Link to={`/products/${product.id}`} className="block relative aspect-square bg-slate-100 overflow-hidden">
+    <Card hoverEffect className="group flex flex-col h-full overflow-hidden border-slate-200/90 dark:border-white/[0.08] bg-white dark:bg-slate-900/70 shadow-sm hover:shadow-md dark:shadow-none hover:border-cyan-500/60 transition-all duration-300">
+      <Link to={`/products/${product.id}`} className="block relative aspect-square bg-slate-50 dark:bg-[#0c121c] overflow-hidden border-b border-slate-100 dark:border-white/[0.06]">
         {product.image && !imageError ? (
           <img
             src={product.image}
             alt={product.name}
             onError={() => setImageError(true)}
-            className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-300"
+            className="w-full h-full object-contain p-2 sm:p-3 group-hover:scale-105 transition-transform duration-500"
             referrerPolicy="no-referrer"
           />
         ) : (
-          <div className="w-full h-full flex flex-col items-center justify-center bg-slate-100 text-slate-400 p-4 text-center">
-            <ShoppingBag className="w-10 h-10 mb-1 opacity-50" />
-            <span className="text-[11px] font-medium text-slate-500">BuyYantra Catalog</span>
+          <div className="w-full h-full flex flex-col items-center justify-center bg-slate-50 dark:bg-[#0c121c] text-slate-400 dark:text-slate-500 p-3 text-center">
+            <ShoppingBag className="w-8 h-8 sm:w-10 sm:h-10 mb-1 text-cyan-500/40" />
+            <span className="text-[10px] sm:text-[11px] font-mono text-cyan-600 dark:text-cyan-400/80">GENUINE ELECTRONICS</span>
           </div>
         )}
 
         {/* Stock Badge Overlay */}
-        <div className="absolute top-2.5 right-2.5">
+        <div className="absolute top-2 right-2 scale-90 sm:scale-100 origin-top-right">
           {product.stock > 0 ? (
             product.stock <= 5 ? (
               <Badge variant="warning" size="sm">
@@ -78,20 +78,20 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
             )
           ) : (
             <Badge variant="danger" size="sm">
-              Out of Stock
+              Sold Out
             </Badge>
           )}
         </div>
       </Link>
 
-      <div className="flex flex-col flex-1 p-4">
+      <div className="flex flex-col flex-1 p-2.5 sm:p-4">
         {/* Categories */}
         {product.categories && product.categories.length > 0 && (
-          <div className="flex flex-wrap gap-1 mb-2">
-            {product.categories.slice(0, 2).map((cat) => (
+          <div className="flex flex-wrap gap-1 mb-1.5 sm:mb-2">
+            {product.categories.slice(0, 1).map((cat) => (
               <span
                 key={cat.id}
-                className="text-[10px] font-medium text-slate-500 uppercase tracking-wider bg-slate-100 px-2 py-0.5 rounded"
+                className="text-[9px] sm:text-[10px] font-mono font-medium text-cyan-700 dark:text-cyan-300 uppercase tracking-wider bg-cyan-50 dark:bg-cyan-950/60 border border-cyan-200 dark:border-cyan-500/25 px-1.5 sm:px-2 py-0.5 rounded"
               >
                 {cat.name}
               </span>
@@ -102,15 +102,15 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         {/* Title */}
         <Link
           to={`/products/${product.id}`}
-          className="text-sm font-semibold text-slate-900 group-hover:text-slate-700 line-clamp-2 transition-colors flex-1"
+          className="text-xs sm:text-sm font-semibold text-slate-900 dark:text-slate-100 group-hover:text-cyan-600 dark:group-hover:text-cyan-300 line-clamp-2 leading-snug transition-colors flex-1"
         >
           {product.name}
         </Link>
 
         {/* Price and Action */}
-        <div className="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between gap-2">
+        <div className="mt-2.5 sm:mt-4 pt-2.5 sm:pt-3 border-t border-slate-100 dark:border-white/[0.08] flex items-center justify-between gap-1.5 sm:gap-2">
           <div>
-            <span className="text-base font-bold text-slate-900">
+            <span className="text-xs sm:text-base font-bold text-slate-900 dark:text-white font-mono tracking-tight">
               {formatCurrency(product.price)}
             </span>
           </div>
@@ -119,15 +119,15 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
             type="button"
             onClick={handleQuickAdd}
             disabled={isAdding || product.stock <= 0}
-            className={`flex h-8 w-8 items-center justify-center rounded-lg transition-all cursor-pointer ${
+            className={`flex h-7 w-7 sm:h-8 sm:w-8 items-center justify-center rounded-lg transition-all cursor-pointer ${
               justAdded
-                ? 'bg-emerald-600 text-white'
-                : 'bg-slate-900 text-white hover:bg-slate-800 disabled:opacity-40 disabled:cursor-not-allowed'
+                ? 'bg-emerald-500 text-white font-bold shadow-[0_0_12px_rgba(16,185,129,0.5)]'
+                : 'bg-cyan-500 text-slate-950 hover:bg-cyan-400 hover:shadow-[0_0_14px_rgba(6,182,212,0.6)] disabled:opacity-30 disabled:cursor-not-allowed'
             }`}
             aria-label={justAdded ? 'Added to cart' : 'Add to cart'}
             title="Quick add to cart"
           >
-            {justAdded ? <Check className="w-4 h-4" /> : <Plus className="w-4 h-4" />}
+            {justAdded ? <Check className="w-3.5 h-3.5 sm:w-4 sm:h-4" /> : <Plus className="w-3.5 h-3.5 sm:w-4 sm:h-4" />}
           </button>
         </div>
       </div>

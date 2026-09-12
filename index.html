@@ -5,9 +5,18 @@
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>BuyYantra FrontStore</title>
-    <meta name="description" content="Frontend store application for BuyYantra built with React and Vite." />
+    <meta name="description" content="Premier consumer electronics e-commerce store for phones, laptops, accessories, smart appliances, and computer parts with live inventory and fast shipping." />
     <meta property="og:title" content="BuyYantra FrontStore" />
-    <meta property="og:description" content="Frontend store application for BuyYantra built with React and Vite." />
+    <meta property="og:description" content="Premier consumer electronics e-commerce store for phones, laptops, accessories, smart appliances, and computer parts with live inventory and fast shipping." />
+    <script>
+      (function() {
+        try {
+          var saved = localStorage.getItem('buyyantra_theme') || 'dark';
+          document.documentElement.classList.add(saved);
+          document.documentElement.setAttribute('data-theme', saved);
+        } catch (e) {}
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>

@@ -2,7 +2,7 @@ import React from 'react';
 import { cn } from '../../lib/cn';
 
 export interface BadgeProps extends React.HTMLAttributes<HTMLSpanElement> {
-  variant?: 'default' | 'success' | 'warning' | 'danger' | 'info' | 'outline' | 'accent';
+  variant?: 'default' | 'success' | 'warning' | 'danger' | 'info' | 'outline' | 'accent' | 'primary';
   size?: 'sm' | 'md';
 }
 
@@ -14,13 +14,14 @@ export const Badge: React.FC<BadgeProps> = ({
   ...props
 }) => {
   const variants = {
-    default: 'bg-slate-100 text-slate-800 border-slate-200',
-    success: 'bg-emerald-50 text-emerald-700 border-emerald-200',
-    warning: 'bg-amber-50 text-amber-800 border-amber-200',
-    danger: 'bg-rose-50 text-rose-700 border-rose-200',
-    info: 'bg-sky-50 text-sky-700 border-sky-200',
-    outline: 'bg-transparent text-slate-700 border-slate-300',
-    accent: 'bg-amber-100 text-amber-900 border-amber-300 font-semibold',
+    default: 'bg-slate-100 dark:bg-slate-800/80 text-slate-700 dark:text-slate-300 border-slate-200 dark:border-white/10',
+    primary: 'bg-cyan-50 dark:bg-cyan-950/80 text-cyan-700 dark:text-cyan-300 border-cyan-200 dark:border-cyan-500/40 font-semibold shadow-xs',
+    success: 'bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-400 border-emerald-200 dark:border-emerald-500/30',
+    warning: 'bg-amber-50 dark:bg-amber-950/60 text-amber-800 dark:text-amber-300 border-amber-200 dark:border-amber-500/30',
+    danger: 'bg-rose-50 dark:bg-rose-950/60 text-rose-700 dark:text-rose-400 border-rose-200 dark:border-rose-500/30',
+    info: 'bg-cyan-50 dark:bg-cyan-950/60 text-cyan-700 dark:text-cyan-300 border-cyan-200 dark:border-cyan-500/30',
+    outline: 'bg-transparent text-[var(--text-secondary)] border-[var(--border-subtle)]',
+    accent: 'bg-cyan-50 dark:bg-cyan-950/80 text-cyan-700 dark:text-cyan-300 border-cyan-200 dark:border-cyan-500/40 font-semibold shadow-xs',
   };
 
   const sizes = {

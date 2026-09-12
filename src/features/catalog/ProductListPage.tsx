@@ -143,39 +143,43 @@ export const ProductListPage: React.FC = () => {
   return (
     <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8">
       {/* Breadcrumb & Header */}
-      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 pb-6 border-b border-slate-200">
+      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 pb-6 border-b border-slate-200 dark:border-white/[0.08]">
         <div>
-          <h1 className="text-3xl font-bold font-heading tracking-tight text-slate-900">
-            Product Catalog
+          <div className="flex items-center gap-2 mb-1.5">
+            <span className="h-2 w-2 rounded-full bg-cyan-500 shadow-[0_0_8px_rgba(6,182,212,0.8)]" />
+            <span className="text-[10px] font-mono uppercase tracking-widest text-cyan-600 dark:text-cyan-400 font-semibold">BUY YANTRA ELECTRONICS CATALOG</span>
+          </div>
+          <h1 className="text-2xl sm:text-3xl font-extrabold font-heading tracking-tight text-slate-900 dark:text-white">
+            System Apparatus &amp; Electronics Catalog
           </h1>
-          <p className="text-sm text-slate-500 mt-1">
-            {isFetching ? 'Refreshing catalog...' : `Showing ${productData?.results.length ?? 0} of ${totalCount} available products`}
+          <p className="text-xs text-slate-600 dark:text-slate-400 mt-1 font-mono">
+            {isFetching ? 'Synchronizing products...' : `INDEX: ${productData?.results.length ?? 0} ACTIVE / ${totalCount} UNITS IN SYSTEM`}
           </p>
         </div>
 
         {/* Search & Sort Controls */}
         <div className="flex flex-wrap items-center gap-3">
-          <div className="relative w-full sm:w-64">
+          <div className="relative w-full sm:w-72">
             <input
               type="text"
-              placeholder="Search products..."
+              placeholder="Search smartphones, laptops, electronics..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full rounded-lg border border-slate-300 bg-white px-3.5 py-2 pl-9 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-slate-900"
+              className="w-full rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900/80 px-3.5 py-2 pl-9 text-xs text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 shadow-xs transition-all"
             />
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 dark:text-cyan-400/80" />
             {searchTerm && (
               <button
                 type="button"
                 onClick={() => setSearchTerm('')}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600"
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-cyan-500"
               >
                 <X className="w-4 h-4" />
               </button>
             )}
           </div>
 
-          <div className="w-44">
+          <div className="w-48">
             <Select
               value={ordering}
               onChange={(e) => handleOrderingChange(e.target.value)}
@@ -192,12 +196,12 @@ export const ProductListPage: React.FC = () => {
           <button
             type="button"
             onClick={() => setMobileFilterOpen(!mobileFilterOpen)}
-            className="md:hidden inline-flex items-center gap-2 rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50"
+            className="md:hidden inline-flex items-center gap-2 rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900/80 px-3.5 py-2 text-xs font-medium text-slate-800 dark:text-slate-200 shadow-xs hover:border-cyan-500/50"
           >
-            <SlidersHorizontal className="w-4 h-4" />
+            <SlidersHorizontal className="w-4 h-4 text-cyan-500" />
             <span>Filters</span>
             {hasActiveFilters && (
-              <span className="w-2 h-2 rounded-full bg-amber-500" />
+              <span className="w-2 h-2 rounded-full bg-cyan-500 shadow-[0_0_6px_rgba(6,182,212,0.8)]" />
             )}
           </button>
         </div>
@@ -206,29 +210,29 @@ export const ProductListPage: React.FC = () => {
       {/* Active Filter Chips */}
       {hasActiveFilters && (
         <div className="flex flex-wrap items-center gap-2 py-4">
-          <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider mr-1">
-            Active Filters:
+          <span className="text-xs font-mono text-slate-500 dark:text-slate-400 uppercase tracking-wider mr-1">
+            Active Parameters:
           </span>
           {debouncedSearch && (
-            <Badge variant="outline" className="gap-1.5 py-1">
-              Search: "{debouncedSearch}"
-              <X className="w-3 h-3 cursor-pointer" onClick={() => setSearchTerm('')} />
+            <Badge variant="outline" className="gap-1.5 py-1 text-cyan-700 dark:text-cyan-300 border-cyan-300 dark:border-cyan-500/30 bg-cyan-50 dark:bg-cyan-950/40">
+              Query: "{debouncedSearch}"
+              <X className="w-3 h-3 cursor-pointer hover:text-cyan-500" onClick={() => setSearchTerm('')} />
             </Badge>
           )}
           {selectedCategories.map((catId) => {
             const cat = categories?.find((c) => c.id === catId);
             return (
-              <Badge key={catId} variant="accent" className="gap-1.5 py-1">
+              <Badge key={catId} variant="primary" className="gap-1.5 py-1">
                 {cat ? cat.name : `Category ${catId}`}
                 <X className="w-3 h-3 cursor-pointer" onClick={() => handleCategoryToggle(catId)} />
               </Badge>
             );
           })}
           {(minPrice || maxPrice) && (
-            <Badge variant="outline" className="gap-1.5 py-1">
+            <Badge variant="outline" className="gap-1.5 py-1 text-cyan-700 dark:text-cyan-300 border-cyan-300 dark:border-cyan-500/30 bg-cyan-50 dark:bg-cyan-950/40">
               Price: ₹{minPrice || 0} - {maxPrice ? `₹${maxPrice}` : '∞'}
               <X
-                className="w-3 h-3 cursor-pointer"
+                className="w-3 h-3 cursor-pointer hover:text-cyan-500"
                 onClick={() => {
                   setLocalMinPrice('');
                   setLocalMaxPrice('');
@@ -249,32 +253,32 @@ export const ProductListPage: React.FC = () => {
           <button
             type="button"
             onClick={handleResetFilters}
-            className="text-xs font-semibold text-rose-600 hover:text-rose-700 flex items-center gap-1 ml-2 cursor-pointer"
+            className="text-xs font-mono text-cyan-600 dark:text-cyan-400 hover:text-cyan-700 dark:hover:text-cyan-300 flex items-center gap-1 ml-2 cursor-pointer transition-colors"
           >
             <RotateCcw className="w-3.5 h-3.5" />
-            Clear All
+            Reset Parameters
           </button>
         </div>
       )}
 
       {/* Main Layout: Sidebar Filters + Products Grid */}
       <div className="grid grid-cols-1 md:grid-cols-12 gap-8 pt-6">
-        {/* Sidebar Filters Desktop */}
+        {/* Sidebar Filters Desktop (Bento styled filter card) */}
         <aside
           className={`md:col-span-3 space-y-6 ${
             mobileFilterOpen ? 'block' : 'hidden md:block'
           }`}
         >
-          <div className="rounded-xl border border-slate-200 bg-white p-5 space-y-6">
-            <div className="flex items-center justify-between pb-3 border-b border-slate-100">
-              <h3 className="font-semibold text-sm text-slate-900 uppercase tracking-wider">
-                Filter Equipment
+          <div className="rounded-2xl border border-slate-200 dark:border-white/[0.08] bg-white dark:bg-slate-900/60 p-5 space-y-6 shadow-sm dark:shadow-none backdrop-blur-md">
+            <div className="flex items-center justify-between pb-3 border-b border-slate-100 dark:border-white/[0.08]">
+              <h3 className="font-mono text-xs font-bold text-slate-900 dark:text-white uppercase tracking-wider">
+                Filter Parameters
               </h3>
               {hasActiveFilters && (
                 <button
                   type="button"
                   onClick={handleResetFilters}
-                  className="text-xs text-slate-500 hover:text-slate-900"
+                  className="text-xs font-mono text-cyan-600 dark:text-cyan-400 hover:underline cursor-pointer"
                 >
                   Reset
                 </button>
@@ -283,29 +287,33 @@ export const ProductListPage: React.FC = () => {
 
             {/* Category Filter */}
             <div className="space-y-3">
-              <h4 className="text-xs font-bold text-slate-700 uppercase tracking-wider">
+              <h4 className="text-[11px] font-mono text-slate-500 dark:text-slate-400 uppercase tracking-wider">
                 Categories
               </h4>
               {categoriesLoading ? (
-                <p className="text-xs text-slate-400">Loading categories...</p>
+                <p className="text-xs text-slate-500">Querying registry...</p>
               ) : !categories || categories.length === 0 ? (
-                <p className="text-xs text-slate-400">No categories recorded</p>
+                <p className="text-xs text-slate-500">No categories recorded</p>
               ) : (
-                <div className="space-y-1.5 max-h-52 overflow-y-auto pr-1">
+                <div className="space-y-1.5 max-h-56 overflow-y-auto pr-1">
                   {categories.map((category) => {
                     const isSelected = selectedCategories.includes(category.id);
                     return (
                       <label
                         key={category.id}
-                        className="flex items-center gap-2.5 text-xs text-slate-700 hover:text-slate-900 cursor-pointer select-none py-1"
+                        className={`flex items-center gap-2.5 text-xs rounded-lg px-2 py-1.5 cursor-pointer select-none transition-colors ${
+                          isSelected
+                            ? 'bg-cyan-50 dark:bg-cyan-950/60 text-cyan-700 dark:text-cyan-300 border border-cyan-200 dark:border-cyan-500/30 font-medium'
+                            : 'text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800/60 hover:text-slate-900 dark:hover:text-white'
+                        }`}
                       >
                         <input
                           type="checkbox"
                           checked={isSelected}
                           onChange={() => handleCategoryToggle(category.id)}
-                          className="rounded border-slate-300 text-slate-900 focus:ring-slate-900 h-4 w-4"
+                          className="rounded border-slate-300 dark:border-white/20 bg-white dark:bg-slate-950 text-cyan-600 focus:ring-cyan-500 h-4 w-4"
                         />
-                        <span className={isSelected ? 'font-semibold text-slate-900' : ''}>
+                        <span className={isSelected ? 'font-semibold' : ''}>
                           {category.name}
                         </span>
                       </label>
@@ -316,43 +324,43 @@ export const ProductListPage: React.FC = () => {
             </div>
 
             {/* Price Range */}
-            <div className="space-y-3 pt-3 border-t border-slate-100">
-              <h4 className="text-xs font-bold text-slate-700 uppercase tracking-wider">
+            <div className="space-y-3 pt-4 border-t border-slate-100 dark:border-white/[0.08]">
+              <h4 className="text-[11px] font-mono text-slate-500 dark:text-slate-400 uppercase tracking-wider">
                 Price Range (₹)
               </h4>
-              <form onSubmit={handleApplyPriceFilter} className="space-y-2">
+              <form onSubmit={handleApplyPriceFilter} className="space-y-2.5">
                 <div className="grid grid-cols-2 gap-2">
                   <input
                     type="number"
                     placeholder="Min"
                     value={localMinPrice}
                     onChange={(e) => setLocalMinPrice(e.target.value)}
-                    className="w-full rounded-md border border-slate-300 px-2.5 py-1.5 text-xs text-slate-900 focus:outline-none focus:ring-1 focus:ring-slate-900"
+                    className="w-full rounded-lg border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-950/60 px-2.5 py-1.5 text-xs text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 shadow-xs"
                   />
                   <input
                     type="number"
                     placeholder="Max"
                     value={localMaxPrice}
                     onChange={(e) => setLocalMaxPrice(e.target.value)}
-                    className="w-full rounded-md border border-slate-300 px-2.5 py-1.5 text-xs text-slate-900 focus:outline-none focus:ring-1 focus:ring-slate-900"
+                    className="w-full rounded-lg border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-950/60 px-2.5 py-1.5 text-xs text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 shadow-xs"
                   />
                 </div>
                 <Button type="submit" variant="secondary" size="sm" fullWidth>
-                  Apply Range
+                  Filter Range
                 </Button>
               </form>
             </div>
 
             {/* Stock Filter */}
-            <div className="pt-3 border-t border-slate-100">
-              <label className="flex items-center gap-2.5 text-xs text-slate-700 cursor-pointer select-none">
+            <div className="pt-4 border-t border-slate-100 dark:border-white/[0.08]">
+              <label className="flex items-center gap-2.5 text-xs text-slate-700 dark:text-slate-300 cursor-pointer select-none">
                 <input
                   type="checkbox"
                   checked={inStockOnly}
                   onChange={(e) => handleStockToggle(e.target.checked)}
-                  className="rounded border-slate-300 text-slate-900 focus:ring-slate-900 h-4 w-4"
+                  className="rounded border-slate-300 dark:border-white/20 bg-white dark:bg-slate-950 text-cyan-600 focus:ring-cyan-500 h-4 w-4"
                 />
-                <span className="font-medium">In-Stock Items Only</span>
+                <span className="font-medium">Active Stock Only</span>
               </label>
             </div>
           </div>
@@ -361,19 +369,19 @@ export const ProductListPage: React.FC = () => {
         {/* Products Grid Area */}
         <section className="md:col-span-9">
           {isLoading ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6">
               {Array.from({ length: 6 }).map((_, i) => (
                 <ProductCardSkeleton key={i} />
               ))}
             </div>
           ) : !productData || productData.results.length === 0 ? (
-            <div className="rounded-2xl border border-slate-200 bg-white p-12 text-center space-y-3">
-              <div className="mx-auto w-12 h-12 rounded-full bg-slate-100 flex items-center justify-center text-slate-400">
-                <Search className="w-6 h-6" />
+            <div className="rounded-2xl border border-slate-200 dark:border-white/[0.08] bg-white dark:bg-slate-900/60 p-8 sm:p-12 text-center space-y-3 shadow-sm dark:shadow-none">
+              <div className="mx-auto w-12 h-12 rounded-2xl bg-cyan-50 dark:bg-cyan-950/60 border border-cyan-200 dark:border-cyan-500/30 flex items-center justify-center text-cyan-600 dark:text-cyan-400">
+                <Search className="w-5 h-5" />
               </div>
-              <h3 className="text-base font-semibold text-slate-900">No products match your criteria</h3>
-              <p className="text-xs text-slate-500 max-w-sm mx-auto">
-                Try adjusting your search terms, removing category filters, or expanding the price range.
+              <h3 className="text-base font-semibold text-slate-900 dark:text-white">No electronics match your search criteria</h3>
+              <p className="text-xs text-slate-500 dark:text-slate-400 max-w-sm mx-auto">
+                Adjust filter specifications, remove active category selections, or broaden your price thresholds.
               </p>
               <div className="pt-2">
                 <Button variant="outline" size="sm" onClick={handleResetFilters}>
@@ -383,7 +391,7 @@ export const ProductListPage: React.FC = () => {
             </div>
           ) : (
             <div className="space-y-8">
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6">
                 {productData.results.map((product) => (
                   <ProductCard key={product.id} product={product} />
                 ))}
@@ -391,7 +399,7 @@ export const ProductListPage: React.FC = () => {
 
               {/* Pagination Controls */}
               {totalPages > 1 && (
-                <div className="flex items-center justify-between border-t border-slate-200 pt-6">
+                <div className="flex items-center justify-between border-t border-slate-200 dark:border-white/[0.08] pt-6">
                   <Button
                     variant="outline"
                     size="sm"
@@ -402,8 +410,8 @@ export const ProductListPage: React.FC = () => {
                     Previous
                   </Button>
 
-                  <div className="text-xs font-semibold text-slate-600">
-                    Page <span className="text-slate-900">{page}</span> of {totalPages}
+                  <div className="text-xs font-mono text-slate-500 dark:text-slate-400">
+                    PAGE <span className="text-cyan-600 dark:text-cyan-400 font-bold">{page}</span> OF {totalPages}
                   </div>
 
                   <Button

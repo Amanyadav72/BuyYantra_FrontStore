@@ -147,32 +147,36 @@ export const CheckoutPage: React.FC = () => {
         <nav className="mb-2">
           <Link
             to="/cart"
-            className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-500 hover:text-slate-900"
+            className="inline-flex items-center gap-1.5 text-xs font-mono font-semibold text-cyan-400 hover:text-cyan-300 transition-colors"
           >
             <ArrowLeft className="w-3.5 h-3.5" />
-            Back to Cart
+            RETURN TO ORDER BUFFER
           </Link>
         </nav>
-        <h1 className="text-3xl font-bold font-heading tracking-tight text-slate-900">
-          Checkout & Dispatch
+        <div className="flex items-center gap-2 mb-1">
+          <span className="h-2 w-2 rounded-full bg-cyan-400 shadow-[0_0_8px_rgba(6,182,212,0.8)]" />
+          <span className="text-[10px] font-mono text-cyan-400 uppercase tracking-widest">DISPATCH TERMINAL</span>
+        </div>
+        <h1 className="text-3xl font-bold font-heading tracking-tight text-white">
+          Allocation Settlement &amp; Dispatch
         </h1>
-        <p className="text-sm text-slate-500 mt-1">
-          Review your shipping destination and confirm your order placement
+        <p className="text-xs font-mono text-slate-400 mt-1">
+          Review destination telemetry and authorize final equipment order dispatch
         </p>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
         {/* Left: Shipping Address Selection */}
         <div className="lg:col-span-8 space-y-6">
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between pb-3">
+          <Card className="border-white/[0.08] bg-slate-900/60 backdrop-blur-md">
+            <CardHeader className="flex flex-row items-center justify-between pb-3 border-b border-white/[0.08]">
               <div className="space-y-1">
-                <CardTitle className="text-base flex items-center gap-2">
-                  <MapPin className="w-4 h-4 text-slate-700" />
-                  Select Shipping Destination
+                <CardTitle className="text-sm font-mono flex items-center gap-2 text-white">
+                  <MapPin className="w-4 h-4 text-cyan-400" />
+                  DESTINATION TELEMETRY NODE
                 </CardTitle>
-                <p className="text-xs text-slate-500">
-                  Choose where you want your equipment delivered
+                <p className="text-xs font-mono text-slate-400">
+                  Select registered destination coordinate for hardware transit
                 </p>
               </div>
               <Button
@@ -181,26 +185,27 @@ export const CheckoutPage: React.FC = () => {
                 leftIcon={<Plus className="w-3.5 h-3.5" />}
                 onClick={() => setIsAddAddressModalOpen(true)}
               >
-                Add Address
+                Add Destination
               </Button>
             </CardHeader>
 
-            <CardContent className="space-y-4">
+            <CardContent className="space-y-4 pt-4">
               {isAddressesLoading ? (
-                <p className="text-xs text-slate-400 py-4 text-center">Loading addresses...</p>
+                <p className="text-xs font-mono text-cyan-400 py-4 text-center">LOCATING DESTINATION NODES...</p>
               ) : !addresses || addresses.length === 0 ? (
-                <div className="rounded-xl border border-dashed border-slate-300 p-8 text-center space-y-3">
-                  <MapPin className="w-8 h-8 text-slate-400 mx-auto" />
-                  <p className="text-sm font-semibold text-slate-800">No saved shipping addresses</p>
-                  <p className="text-xs text-slate-500 max-w-xs mx-auto">
-                    Please provide your delivery destination address to place your order.
+                <div className="rounded-2xl border border-dashed border-white/20 p-8 text-center space-y-3 bg-slate-950/40">
+                  <MapPin className="w-8 h-8 text-cyan-400/50 mx-auto" />
+                  <p className="text-sm font-semibold text-white">No Registered Destinations</p>
+                  <p className="text-xs font-mono text-slate-400 max-w-xs mx-auto">
+                    Provide destination coordinate parameters to enable logistics routing.
                   </p>
                   <Button
                     size="sm"
+                    variant="primary"
                     onClick={() => setIsAddAddressModalOpen(true)}
                     leftIcon={<Plus className="w-3.5 h-3.5" />}
                   >
-                    Add Shipping Address
+                    Register Destination
                   </Button>
                 </div>
               ) : (
@@ -211,15 +216,15 @@ export const CheckoutPage: React.FC = () => {
                       <div
                         key={address.id}
                         onClick={() => setSelectedAddressId(address.id)}
-                        className={`rounded-xl border p-4 cursor-pointer transition-all relative ${
+                        className={`rounded-2xl border p-4 cursor-pointer transition-all relative ${
                           isSelected
-                            ? 'border-slate-900 bg-slate-50/80 ring-2 ring-slate-900 shadow-xs'
-                            : 'border-slate-200 bg-white hover:border-slate-300'
+                            ? 'border-cyan-500/80 bg-cyan-950/20 shadow-[0_0_20px_rgba(6,182,212,0.2)]'
+                            : 'border-white/[0.08] bg-slate-950/40 hover:border-white/20 hover:bg-slate-950/70'
                         }`}
                       >
                         <div className="flex items-start justify-between mb-2">
                           <div className="flex items-center gap-2">
-                            <span className="text-xs font-bold text-slate-900">
+                            <span className="text-xs font-bold text-white font-mono">
                               {address.recipient_name}
                             </span>
                             {address.label && (
@@ -229,25 +234,25 @@ export const CheckoutPage: React.FC = () => {
                             )}
                           </div>
                           {isSelected && (
-                            <CheckCircle className="w-4 h-4 text-slate-900 fill-slate-900 text-white shrink-0" />
+                            <CheckCircle className="w-4 h-4 text-cyan-400 fill-cyan-400 text-slate-950 shrink-0" />
                           )}
                         </div>
 
-                        <p className="text-xs text-slate-600 line-clamp-1">{address.line1}</p>
+                        <p className="text-xs text-slate-300 line-clamp-1">{address.line1}</p>
                         {address.line2 && (
-                          <p className="text-xs text-slate-600 line-clamp-1">{address.line2}</p>
+                          <p className="text-xs text-slate-400 line-clamp-1">{address.line2}</p>
                         )}
-                        <p className="text-xs text-slate-600 mt-0.5">
+                        <p className="text-xs font-mono text-slate-400 mt-0.5">
                           {address.city}, {address.state} - {address.postal_code}
                         </p>
-                        <p className="text-xs text-slate-500 mt-2 font-mono">
-                          Ph: {address.phone}
+                        <p className="text-xs text-cyan-400/80 mt-2 font-mono">
+                          Comm: {address.phone}
                         </p>
 
                         {address.is_default && (
                           <div className="mt-2">
                             <Badge variant="success" size="sm">
-                              Default Address
+                              Primary Node
                             </Badge>
                           </div>
                         )}
@@ -260,18 +265,18 @@ export const CheckoutPage: React.FC = () => {
           </Card>
 
           {/* Cart Items Summary */}
-          <Card>
-            <CardHeader className="pb-3">
-              <CardTitle className="text-base flex items-center gap-2">
-                <ShoppingBag className="w-4 h-4 text-slate-700" />
-                Items In This Shipment ({itemCount})
+          <Card className="border-white/[0.08] bg-slate-900/60 backdrop-blur-md">
+            <CardHeader className="pb-3 border-b border-white/[0.08]">
+              <CardTitle className="text-sm font-mono flex items-center gap-2 text-white">
+                <ShoppingBag className="w-4 h-4 text-cyan-400" />
+                Transit Manifest ({itemCount} Units)
               </CardTitle>
             </CardHeader>
-            <CardContent className="divide-y divide-slate-100">
+            <CardContent className="divide-y divide-white/[0.06]">
               {cart.items.map((item) => (
                 <div key={item.id} className="py-3 flex items-center justify-between gap-4">
                   <div className="flex items-center gap-3 min-w-0">
-                    <div className="w-12 h-12 rounded-lg bg-slate-100 border border-slate-200 shrink-0 overflow-hidden flex items-center justify-center">
+                    <div className="w-12 h-12 rounded-xl bg-[#0c121c] border border-white/10 shrink-0 overflow-hidden flex items-center justify-center">
                       {item.image ? (
                         <img
                           src={item.image}
@@ -280,19 +285,19 @@ export const CheckoutPage: React.FC = () => {
                           referrerPolicy="no-referrer"
                         />
                       ) : (
-                        <ShoppingBag className="w-5 h-5 text-slate-300" />
+                        <ShoppingBag className="w-5 h-5 text-cyan-400/50" />
                       )}
                     </div>
                     <div className="min-w-0">
-                      <p className="text-xs font-semibold text-slate-900 truncate">
+                      <p className="text-xs font-semibold text-slate-200 truncate">
                         {item.product_name}
                       </p>
-                      <p className="text-[11px] text-slate-500">
+                      <p className="text-[11px] font-mono text-slate-400">
                         Qty: {item.quantity} × {formatCurrency(item.unit_price)}
                       </p>
                     </div>
                   </div>
-                  <span className="text-xs font-bold text-slate-900 shrink-0">
+                  <span className="text-xs font-mono font-bold text-white shrink-0">
                     {formatCurrency(item.subtotal)}
                   </span>
                 </div>
@@ -303,41 +308,40 @@ export const CheckoutPage: React.FC = () => {
 
         {/* Right: Place Order Card */}
         <div className="lg:col-span-4 space-y-4">
-          <Card className="sticky top-24">
+          <Card className="sticky top-24 border-white/[0.08] bg-slate-900/70 backdrop-blur-md">
             <CardContent className="p-6 space-y-5">
-              <h3 className="text-base font-bold text-slate-900 font-heading pb-3 border-b border-slate-100">
-                Payment & Order Placement
+              <h3 className="text-sm font-mono font-bold text-white uppercase tracking-wider pb-3 border-b border-white/[0.08]">
+                Settlement Authorization
               </h3>
 
-              <div className="rounded-xl bg-slate-50 p-3 border border-slate-200 text-xs text-slate-600 space-y-1.5">
-                <div className="flex items-center gap-1.5 font-semibold text-slate-800">
-                  <ShieldCheck className="w-4 h-4 text-emerald-600" />
-                  Direct Order Protocol
+              <div className="rounded-2xl bg-cyan-950/20 p-3.5 border border-cyan-500/30 text-xs text-slate-300 space-y-1.5">
+                <div className="flex items-center gap-1.5 font-semibold text-cyan-300 font-mono">
+                  <ShieldCheck className="w-4 h-4 text-cyan-400" />
+                  Direct Allocation Protocol
                 </div>
-                <p className="text-[11px] leading-relaxed">
-                  Per the ShopHub API specification, orders are registered directly with status{' '}
-                  <span className="font-semibold text-slate-800">PENDING</span>. Payment gateway integration will be handled upon subsequent invoice delivery.
+                <p className="text-[11px] leading-relaxed text-slate-400">
+                  Orders are registered with status <span className="font-mono text-cyan-300 font-semibold">PENDING</span> in telemetry. Hardware reservations activate instantaneously upon submission.
                 </p>
               </div>
 
-              <div className="space-y-2 text-xs text-slate-600 pt-2">
+              <div className="space-y-2 text-xs text-slate-400 pt-2">
                 <div className="flex justify-between">
-                  <span>Subtotal ({itemCount} items)</span>
-                  <span className="font-semibold text-slate-800">{formatCurrency(subtotal)}</span>
+                  <span>Hardware Subtotal ({itemCount})</span>
+                  <span className="font-mono font-semibold text-white">{formatCurrency(subtotal)}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span>Standard Ground Shipping</span>
-                  <span className="font-semibold text-emerald-600">Calculated Post-Booking</span>
+                  <span>Dispatch Transit Routing</span>
+                  <span className="font-mono font-semibold text-cyan-400">Calculated Post-Booking</span>
                 </div>
                 <div className="flex justify-between">
-                  <span>Estimated Taxes</span>
-                  <span className="font-semibold text-slate-600">Itemized on Invoice</span>
+                  <span>Regulatory GST</span>
+                  <span className="font-mono font-semibold text-slate-400">Itemized on Invoice</span>
                 </div>
               </div>
 
-              <div className="pt-3 border-t border-slate-200 flex justify-between items-baseline">
-                <span className="text-sm font-bold text-slate-900">Total Due</span>
-                <span className="text-2xl font-extrabold text-slate-900">
+              <div className="pt-3 border-t border-white/[0.08] flex justify-between items-baseline">
+                <span className="text-xs font-mono text-slate-300">Total Settlement</span>
+                <span className="text-2xl font-mono font-extrabold text-cyan-300">
                   {formatCurrency(subtotal)}
                 </span>
               </div>
@@ -345,17 +349,18 @@ export const CheckoutPage: React.FC = () => {
               <Button
                 onClick={handlePlaceOrder}
                 size="lg"
+                variant="primary"
                 fullWidth
                 isLoading={checkoutMutation.isPending}
                 disabled={!effectiveAddressId}
                 rightIcon={<ArrowRight className="w-4 h-4" />}
                 className="h-12"
               >
-                Place Order Now
+                Authorize &amp; Place Order
               </Button>
 
-              <p className="text-[11px] text-center text-slate-400 leading-tight">
-                By confirming your order, stock allocation is reserved immediately in ShopHub.
+              <p className="text-[10px] font-mono text-center text-slate-500 leading-tight">
+                BY CONFIRMING, HARDWARE ALLOCATIONS ARE COMMITTED TO DISPATCH QUEUE.
               </p>
             </CardContent>
           </Card>
@@ -446,17 +451,17 @@ export const CheckoutPage: React.FC = () => {
           </div>
 
           <div className="pt-1">
-            <label className="flex items-center gap-2 text-xs text-slate-700 cursor-pointer select-none">
+            <label className="flex items-center gap-2 text-xs text-slate-300 cursor-pointer select-none">
               <input
                 type="checkbox"
-                className="rounded border-slate-300 text-slate-900 focus:ring-slate-900 h-4 w-4"
+                className="rounded border-white/20 bg-slate-900 text-cyan-500 focus:ring-cyan-500 h-4 w-4"
                 {...register('is_default')}
               />
-              <span>Set as my default shipping address</span>
+              <span>Set as primary delivery node</span>
             </label>
           </div>
 
-          <div className="flex justify-end gap-3 pt-3 border-t border-slate-100">
+          <div className="flex justify-end gap-3 pt-3 border-t border-white/[0.08]">
             <Button
               variant="outline"
               type="button"
@@ -464,8 +469,8 @@ export const CheckoutPage: React.FC = () => {
             >
               Cancel
             </Button>
-            <Button type="submit" isLoading={isSubmittingAddress || createAddressMutation.isPending}>
-              Save Address
+            <Button type="submit" variant="primary" isLoading={isSubmittingAddress || createAddressMutation.isPending}>
+              Register Destination
             </Button>
           </div>
         </form>

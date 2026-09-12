@@ -31,16 +31,16 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
         {label && (
           <label
             htmlFor={inputId}
-            className="block text-xs font-semibold uppercase tracking-wider text-slate-700"
+            className="block text-xs font-semibold uppercase tracking-wider text-[var(--text-secondary)]"
           >
             {label}
-            {props.required && <span className="text-rose-500 ml-0.5">*</span>}
+            {props.required && <span className="text-cyan-500 ml-0.5">*</span>}
           </label>
         )}
 
         <div className="relative flex items-center">
           {leftIcon && (
-            <div className="absolute left-3 flex items-center pointer-events-none text-slate-400">
+            <div className="absolute left-3 flex items-center pointer-events-none text-[var(--text-muted)]">
               {leftIcon}
             </div>
           )}
@@ -50,12 +50,12 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
             ref={ref}
             disabled={disabled}
             className={cn(
-              'w-full rounded-lg border bg-white px-3.5 py-2 text-sm text-slate-900 transition-colors placeholder:text-slate-400',
-              'focus:outline-none focus:ring-2 focus:ring-slate-900 focus:border-transparent',
-              'disabled:bg-slate-50 disabled:text-slate-400 disabled:cursor-not-allowed',
+              'w-full rounded-lg border bg-[var(--bg-input)] px-3.5 py-2 text-sm text-[var(--text-primary)] transition-all placeholder:text-[var(--text-muted)]',
+              'focus:outline-none focus:ring-1 focus:ring-cyan-500 focus:border-cyan-500 focus:shadow-[0_0_15px_rgba(6,182,212,0.25)]',
+              'disabled:opacity-50 disabled:cursor-not-allowed',
               error
-                ? 'border-rose-300 focus:ring-rose-500 focus:border-rose-500'
-                : 'border-slate-300 hover:border-slate-400',
+                ? 'border-rose-500/80 focus:ring-rose-500 focus:border-rose-500'
+                : 'border-[var(--border-subtle)] hover:border-cyan-500/40',
               leftIcon ? 'pl-10' : '',
               rightIcon ? 'pr-10' : '',
               className
@@ -71,9 +71,9 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
         </div>
 
         {error ? (
-          <p className="text-xs font-medium text-rose-600 animate-in fade-in-50">{error}</p>
+          <p className="text-xs font-medium text-rose-400 animate-in fade-in-50">{error}</p>
         ) : helperText ? (
-          <p className="text-xs text-slate-500">{helperText}</p>
+          <p className="text-xs text-slate-400">{helperText}</p>
         ) : null}
       </div>
     );

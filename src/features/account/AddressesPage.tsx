@@ -172,91 +172,96 @@ export const AddressesPage: React.FC = () => {
     <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8 space-y-8">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-bold font-heading tracking-tight text-slate-900">
-            Saved Addresses
+          <div className="flex items-center gap-2 mb-1">
+            <span className="h-2 w-2 rounded-full bg-cyan-400 shadow-[0_0_8px_rgba(6,182,212,0.8)]" />
+            <span className="text-[10px] font-mono text-cyan-400 uppercase tracking-widest">LOGISTICS NODES</span>
+          </div>
+          <h1 className="text-3xl font-bold font-heading tracking-tight text-white">
+            Registered Transit Destinations
           </h1>
-          <p className="text-sm text-slate-500 mt-1">
-            Maintain your shipping and delivery destinations for fast checkout
+          <p className="text-xs font-mono text-slate-400 mt-1">
+            Maintain and authenticate hardware shipping and destination telemetry
           </p>
         </div>
 
         <Button
           onClick={handleOpenAddModal}
+          variant="primary"
           leftIcon={<Plus className="w-4 h-4" />}
           className="shrink-0"
         >
-          Add New Address
+          Register Destination
         </Button>
       </div>
 
       {isLoading ? (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {Array.from({ length: 2 }).map((_, i) => (
-            <div key={i} className="h-44 rounded-xl bg-slate-100 animate-pulse" />
+            <div key={i} className="h-44 rounded-2xl bg-slate-900/60 border border-white/[0.08] animate-pulse" />
           ))}
         </div>
       ) : !addresses || addresses.length === 0 ? (
         <div className="mx-auto max-w-md py-16 text-center space-y-4">
-          <div className="mx-auto w-16 h-16 rounded-full bg-slate-100 flex items-center justify-center text-slate-400">
+          <div className="mx-auto w-16 h-16 rounded-2xl bg-cyan-950/60 border border-cyan-500/30 flex items-center justify-center text-cyan-400">
             <MapPin className="w-8 h-8" />
           </div>
-          <h2 className="text-xl font-bold text-slate-900 font-heading">No Addresses Saved</h2>
-          <p className="text-sm text-slate-500 max-w-xs mx-auto">
-            Save shipping addresses to speed up your equipment order dispatch.
+          <h2 className="text-xl font-bold text-white font-heading">No Destination Nodes Registered</h2>
+          <p className="text-xs font-mono text-slate-400 max-w-xs mx-auto">
+            Save delivery coordinates to streamline precision hardware order dispatches.
           </p>
           <div className="pt-2">
-            <Button onClick={handleOpenAddModal} leftIcon={<Plus className="w-4 h-4" />}>
-              Add Your First Address
+            <Button onClick={handleOpenAddModal} variant="primary" leftIcon={<Plus className="w-4 h-4" />}>
+              Register Primary Node
             </Button>
           </div>
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {addresses.map((addr) => (
-            <Card key={addr.id} className="relative flex flex-col justify-between overflow-hidden">
+            <Card key={addr.id} className="relative flex flex-col justify-between overflow-hidden border-white/[0.08] bg-slate-900/60 backdrop-blur-md hover:border-cyan-500/40 hover:shadow-[0_0_24px_-4px_rgba(6,182,212,0.2)] transition-all">
               <CardContent className="p-6 space-y-3">
                 <div className="flex items-start justify-between">
                   <div className="flex items-center gap-2">
-                    <span className="font-bold text-base text-slate-900">
+                    <span className="font-bold font-mono text-base text-white">
                       {addr.recipient_name}
                     </span>
                     <Badge variant="outline" size="sm">
                       {addr.address_type}
                     </Badge>
                     {addr.label && (
-                      <span className="text-xs text-slate-500 font-medium">({addr.label})</span>
+                      <span className="text-xs text-cyan-400 font-mono font-medium">({addr.label})</span>
                     )}
                   </div>
 
                   {addr.is_default && (
                     <Badge variant="success" size="sm" className="gap-1">
                       <CheckCircle2 className="w-3 h-3" />
-                      Default
+                      Primary Node
                     </Badge>
                   )}
                 </div>
 
-                <div className="text-xs text-slate-600 space-y-0.5">
+                <div className="text-xs text-slate-300 space-y-0.5">
                   <p>{addr.line1}</p>
                   {addr.line2 && <p>{addr.line2}</p>}
-                  <p>
+                  <p className="font-mono text-slate-400">
                     {addr.city}, {addr.state} - {addr.postal_code}
                   </p>
-                  <p className="text-slate-500">{addr.country}</p>
-                  <p className="pt-1 font-mono font-medium text-slate-700">Phone: {addr.phone}</p>
+                  <p className="text-cyan-400/80">{addr.country}</p>
+                  <p className="pt-1 font-mono font-medium text-slate-400">Telemetry Comm: {addr.phone}</p>
                 </div>
 
-                <div className="pt-4 border-t border-slate-100 flex items-center justify-between gap-2">
+                <div className="pt-4 border-t border-white/[0.08] flex items-center justify-between gap-2">
                   <div>
                     {!addr.is_default && (
                       <button
                         type="button"
                         onClick={() => setDefaultMutation.mutate(addr.id)}
                         disabled={setDefaultMutation.isPending}
-                        className="inline-flex items-center gap-1 text-xs font-semibold text-slate-600 hover:text-slate-900 cursor-pointer"
+                        className="inline-flex items-center gap-1 text-xs font-mono font-semibold text-cyan-400 hover:text-cyan-300 cursor-pointer transition-colors"
                       >
                         <Star className="w-3.5 h-3.5" />
-                        Set as Default
+                        Set as Primary Node
                       </button>
                     )}
                   </div>
@@ -266,7 +271,7 @@ export const AddressesPage: React.FC = () => {
                       variant="ghost"
                       size="sm"
                       onClick={() => handleOpenEditModal(addr)}
-                      leftIcon={<Edit2 className="w-3.5 h-3.5" />}
+                      leftIcon={<Edit2 className="w-3.5 h-3.5 text-cyan-400" />}
                     >
                       Edit
                     </Button>
@@ -274,7 +279,7 @@ export const AddressesPage: React.FC = () => {
                       variant="ghost"
                       size="sm"
                       onClick={() => setDeletingAddressId(addr.id)}
-                      className="text-rose-600 hover:text-rose-700 hover:bg-rose-50"
+                      className="text-rose-400 hover:text-rose-300 hover:bg-rose-950/40"
                       leftIcon={<Trash2 className="w-3.5 h-3.5" />}
                     >
                       Delete
@@ -294,8 +299,8 @@ export const AddressesPage: React.FC = () => {
           setIsAddModalOpen(false);
           setEditingAddress(null);
         }}
-        title={editingAddress ? 'Edit Shipping Address' : 'Add New Shipping Address'}
-        description="Delivery destination details for order fulfillment"
+        title={editingAddress ? 'Edit Destination Node' : 'Register Destination Node'}
+        description="Delivery destination coordinates for hardware transit"
         maxWidth="lg"
       >
         <form onSubmit={handleSubmit(onFormSubmit)} className="space-y-4">
@@ -374,17 +379,17 @@ export const AddressesPage: React.FC = () => {
           </div>
 
           <div className="pt-1">
-            <label className="flex items-center gap-2 text-xs text-slate-700 cursor-pointer select-none">
+            <label className="flex items-center gap-2 text-xs text-slate-300 cursor-pointer select-none">
               <input
                 type="checkbox"
-                className="rounded border-slate-300 text-slate-900 focus:ring-slate-900 h-4 w-4"
+                className="rounded border-white/20 bg-slate-900 text-cyan-500 focus:ring-cyan-500 h-4 w-4"
                 {...register('is_default')}
               />
               <span>Set as primary default address</span>
             </label>
           </div>
 
-          <div className="flex justify-end gap-3 pt-3 border-t border-slate-100">
+          <div className="flex justify-end gap-3 pt-3 border-t border-white/[0.08]">
             <Button
               variant="outline"
               type="button"
@@ -397,9 +402,10 @@ export const AddressesPage: React.FC = () => {
             </Button>
             <Button
               type="submit"
+              variant="primary"
               isLoading={createMutation.isPending || updateMutation.isPending}
             >
-              {editingAddress ? 'Update Address' : 'Save Address'}
+              {editingAddress ? 'Update Destination' : 'Register Destination'}
             </Button>
           </div>
         </form>
@@ -409,8 +415,8 @@ export const AddressesPage: React.FC = () => {
       <Modal
         isOpen={deletingAddressId !== null}
         onClose={() => setDeletingAddressId(null)}
-        title="Delete Address"
-        description="Are you sure you want to delete this address? This action cannot be undone."
+        title="Deregister Address Node"
+        description="Are you sure you want to remove this destination coordinate? This action cannot be reversed."
       >
         <div className="flex justify-end gap-3 pt-2">
           <Button
@@ -428,7 +434,7 @@ export const AddressesPage: React.FC = () => {
               }
             }}
           >
-            Delete
+            Deregister
           </Button>
         </div>
       </Modal>

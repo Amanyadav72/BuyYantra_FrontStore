@@ -1,24 +1,31 @@
 @import "tailwindcss";
 
-@theme {
-  --color-brand-50: #f4f6fb;
-  --color-brand-100: #e7ecf6;
-  --color-brand-200: #cbd7ed;
-  --color-brand-300: #9eb6dd;
-  --color-brand-400: #6a8ec7;
-  --color-brand-500: #476fb0;
-  --color-brand-600: #335593;
-  --color-brand-700: #2a4478;
-  --color-brand-800: #253b63;
-  --color-brand-900: #1a2842;
-  --color-brand-950: #10192a;
+@custom-variant dark (&:where(.dark, .dark *));
 
-  --color-accent-400: #fbbf24;
-  --color-accent-500: #f59e0b;
-  --color-accent-600: #d97706;
+@theme {
+  --color-brand-50: #0d1520;
+  --color-brand-100: #121c2c;
+  --color-brand-200: #18273f;
+  --color-brand-300: #203556;
+  --color-brand-400: #294776;
+  --color-brand-500: #06b6d4;
+  --color-brand-600: #0891b2;
+  --color-brand-700: #0e7490;
+  --color-brand-800: #155e75;
+  --color-brand-900: #164e63;
+  --color-brand-950: #083344;
+
+  --color-cyan-glow: #00f2fe;
+  --color-cyan-electric: #06b6d4;
+  --color-cyan-bright: #22d3ee;
+
+  --color-accent-400: #22d3ee;
+  --color-accent-500: #06b6d4;
+  --color-accent-600: #0891b2;
 
   --font-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   --font-heading: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 
   --radius-sm: 0.375rem;
   --radius-md: 0.5rem;
@@ -26,13 +33,108 @@
   --radius-xl: 1rem;
 }
 
+:root,
+html.dark,
+[data-theme="dark"] {
+  --bg-app: #080b11;
+  --bg-card: rgba(15, 23, 42, 0.75);
+  --bg-card-solid: #0f172a;
+  --bg-input: rgba(15, 23, 42, 0.85);
+  --bg-subtle: rgba(2, 6, 23, 0.6);
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --border-active: rgba(6, 182, 212, 0.5);
+  --text-primary: #f8fafc;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+  --accent-cyan: #06b6d4;
+  --accent-cyan-hover: #22d3ee;
+  --accent-cyan-bg: rgba(6, 182, 212, 0.15);
+  --header-bg: rgba(8, 11, 17, 0.85);
+  --footer-bg: #070a0f;
+  --card-shadow: 0 0 24px -4px rgba(6, 182, 212, 0.25);
+}
+
+html.light,
+[data-theme="light"] {
+  --bg-app: #f7f6f1;
+  --bg-card: rgba(255, 255, 255, 0.95);
+  --bg-card-solid: #ffffff;
+  --bg-input: #ffffff;
+  --bg-subtle: #f0eee7;
+  --border-subtle: rgba(214, 211, 201, 0.85);
+  --border-active: #0891b2;
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-muted: #64748b;
+  --accent-cyan: #0891b2;
+  --accent-cyan-hover: #06b6d4;
+  --accent-cyan-bg: rgba(8, 145, 178, 0.1);
+  --header-bg: rgba(247, 246, 241, 0.9);
+  --footer-bg: #edeae0;
+  --card-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.04), 0 6px 16px -2px rgba(0, 0, 0, 0.05);
+}
+
 @layer base {
   body {
-    background-color: #f8fafc;
-    color: #0f172a;
+    background-color: var(--bg-app);
+    color: var(--text-primary);
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     min-height: 100vh;
+    transition: background-color 0.2s ease, color 0.2s ease;
   }
 }
+
+/* Light mode paper grain texture */
+html.light body,
+[data-theme="light"] body {
+  background-image:
+    radial-gradient(#d6d3c7 0.75px, transparent 0.75px),
+    url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='paperNoise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 0.04 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23paperNoise)'/%3E%3C/svg%3E");
+  background-size: 24px 24px, 160px 160px;
+}
+
+/* Dark mode grid pattern */
+html.dark body,
+[data-theme="dark"] body {
+  background-image: radial-gradient(rgba(6, 182, 212, 0.1) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+
+/* Subtle tech grid background utility */
+.tech-grid-pattern {
+  background-image: radial-gradient(rgba(255, 255, 255, 0.07) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+.tech-grid-cyan {
+  background-image: radial-gradient(rgba(6, 182, 212, 0.12) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+
+html.light .tech-grid-cyan,
+[data-theme="light"] .tech-grid-cyan {
+  background-image: radial-gradient(rgba(8, 145, 178, 0.15) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+/* Subtle cyan glow utility */
+.glow-border-cyan {
+  box-shadow: 0 0 20px -3px rgba(6, 182, 212, 0.25);
+}
+
+.glow-hover-cyan {
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.glow-hover-cyan:hover {
+  border-color: rgba(6, 182, 212, 0.5);
+  box-shadow: 0 0 25px -4px rgba(6, 182, 212, 0.35);
+}
+
+html.light .glow-hover-cyan:hover,
+[data-theme="light"] .glow-hover-cyan:hover {
+  border-color: rgba(8, 145, 178, 0.5);
+  box-shadow: 0 4px 20px -2px rgba(8, 145, 178, 0.2);
+}
+
