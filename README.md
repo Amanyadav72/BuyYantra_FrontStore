@@ -36,25 +36,29 @@ BuyYantra is a digital storefront focused on delivering a clean shopping experie
 ### Homepage
 
 <div align="center">
-  <img src="https://placehold.co/1200x700/111827/ffffff?text=Homepage+Screenshot" alt="Homepage screenshot placeholder" width="100%" />
+  <img width="1592" height="976" alt="Screenshot 2026-09-24 224916" src="https://github.com/user-attachments/assets/a89097b9-8d77-4d7e-86bd-9f4435fdf791" />
+
 </div>
 
 ### Product Listing
 
 <div align="center">
-  <img src="https://placehold.co/1200x700/1f2937/ffffff?text=Product+Listing+Screenshot" alt="Product listing screenshot placeholder" width="100%" />
+ <img width="1665" height="854" alt="Screenshot 2026-09-24 221539" src="https://github.com/user-attachments/assets/968336e8-32e9-4d1b-b057-38d83bdba47b" />
+
 </div>
 
 ### Cart and Checkout
 
 <div align="center">
-  <img src="https://placehold.co/1200x700/374151/ffffff?text=Cart+and+Checkout+Screenshot" alt="Cart and checkout screenshot placeholder" width="100%" />
+  <img width="1786" height="975" alt="Screenshot 2026-09-24 224849" src="https://github.com/user-attachments/assets/09b1203e-f775-474d-b17f-f9a238732183" />
+
 </div>
 
 ### Account and Orders
 
 <div align="center">
-  <img src="https://placehold.co/1200x700/4b5563/ffffff?text=Account+and+Orders+Screenshot" alt="Account and orders screenshot placeholder" width="100%" />
+  <img width="1571" height="979" alt="Screenshot 2026-09-24 224945" src="https://github.com/user-attachments/assets/76ecccc3-425e-455a-8a4d-ddde9550bb61" />
+
 </div>
 
 ## Tech Stack
